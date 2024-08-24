@@ -1,6 +1,18 @@
 version: '3.8'
 
+networks:
+  dev: 
+
 services:
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      url-shortener  
+
   url-shortener:
     build: .
     ports:
@@ -9,6 +21,8 @@ services:
       - database
     environment:
       - DATABASE_PASSWORD=password
+    networks:
+      - dev
 
   database:
     restart: always
@@ -18,5 +32,4 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
     ports:
-      - 5436:5432
-    
+      - 5436:5432 
