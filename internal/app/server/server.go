@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"github.com/tonitaga/url-shortener/internal/config"
 	"github.com/tonitaga/url-shortener/internal/storage"
@@ -13,12 +14,14 @@ import (
 type Server struct {
 	config  *config.Config
 	logger  *logrus.Logger
+	router  *mux.Router
 	storage *storage.Storage
 }
 
 func New(config *config.Config) *Server {
 	return &Server{
 		config: config,
+		router: mux.NewRouter(),
 		logger: logrus.New(),
 	}
 }
@@ -33,6 +36,9 @@ func (s *Server) Run() error {
 	if err := s.configureStorage(); err != nil {
 		return err
 	}
+
+	s.logger.Info("Starting router configuration")
+	s.configureRouter()
 
 	// Starting server
 	if err := s.startServer(); err != nil {
@@ -66,8 +72,14 @@ func (s *Server) configureStorage() error {
 	}
 
 	s.storage = storage
-	s.logger.Info("Database configuration finishes successfully")
+	s.logger.Info("Storage configuration finishes successfully")
 	return nil
+}
+
+func (s *Server) configureRouter() {
+	s.router.HandleFunc("/create/alias", s.redirectCreationHandler)
+	s.router.HandleFunc("/{alias}", s.redirectionHandler)
+	s.logger.Info("Router configuration finished")
 }
 
 func (s *Server) startServer() error {
@@ -76,5 +88,5 @@ func (s *Server) startServer() error {
 	binding_address := fmt.Sprintf("%s:%d", s.config.Application.Host, s.config.Application.Port)
 	s.logger.Infof("Server is listening on %s", binding_address)
 
-	return fmt.Errorf("%s: %v", op, http.ListenAndServe(binding_address, nil))
+	return fmt.Errorf("%s: %v", op, http.ListenAndServe(binding_address, s.router))
 }

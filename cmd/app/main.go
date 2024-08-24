@@ -3,9 +3,11 @@ package main
 import (
 	"flag"
 	"log"
+	"time"
 
 	"github.com/tonitaga/url-shortener/internal/app/server"
 	"github.com/tonitaga/url-shortener/internal/config"
+	"golang.org/x/exp/rand"
 )
 
 var (
@@ -13,6 +15,7 @@ var (
 )
 
 func init() {
+	rand.Seed(uint64(time.Now().UnixNano()))
 	flag.StringVar(&configPath, "config", "configs/config.yaml", "path to YAML config file")
 }
 
