@@ -1,12 +1,9 @@
 application:
   environment: "local" # or "dev", "prod", etc.
-  host: "localhost"
-  port: 8082
+  port: 8000
 
 database:
-  host: "localhost"
+  host: "database"
   port: 5432
   username: "postgres"
-  password: "postgres"
   database: "postgres"
-  

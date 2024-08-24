@@ -112,14 +112,14 @@
 				return;
 			}
 			const data = { original_url: originalUrl, alias: alias };
-			fetch('http://localhost:8082/create/alias', {
+			fetch('http://localhost:8000/create/alias', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			})
 			.then(response => response.json())
 			.then((data) => {
-				const shortUrl = `http://localhost:8082/${data.alias}`;
+				const shortUrl = `http://localhost:8000/${data.alias}`;
 				resultDiv.innerText = `Your short URL: ${shortUrl}`;
 				copyButton.style.display = 'block';
 				copyButton.addEventListener('click', () => {

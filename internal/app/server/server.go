@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
@@ -91,7 +92,7 @@ func (s *Server) configureRouter() {
 func (s *Server) startServer() error {
 	const op = "server.Server.startServer"
 
-	binding_address := fmt.Sprintf("%s:%d", s.config.Application.Host, s.config.Application.Port)
+	binding_address := ":" + strconv.Itoa(s.config.Application.Port)
 	s.logger.Infof("Server is listening on %s", binding_address)
 
 	return fmt.Errorf("%s: %v", op, http.ListenAndServe(binding_address, s.router))

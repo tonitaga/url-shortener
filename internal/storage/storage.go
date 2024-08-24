@@ -3,6 +3,7 @@ package storage
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	"github.com/tonitaga/url-shortener/internal/config"
 	"github.com/tonitaga/url-shortener/internal/storage/repository/redirect"
@@ -30,7 +31,7 @@ func (s *Storage) Connect() error {
 		s.config.Host,
 		s.config.Port,
 		s.config.Username,
-		s.config.Password,
+		os.Getenv("DATABASE_PASSWORD"),
 		s.config.Name,
 	)
 
