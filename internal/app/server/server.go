@@ -29,6 +29,7 @@ func (s *Server) Run() error {
 	s.logger.Info("Logger configuration finished successfully")
 
 	// Database configuration
+	s.logger.Info("Starting storage configuration")
 	if err := s.configureStorage(); err != nil {
 		return err
 	}
@@ -65,6 +66,7 @@ func (s *Server) configureStorage() error {
 	}
 
 	s.storage = storage
+	s.logger.Info("Database configuration finishes successfully")
 	return nil
 }
 

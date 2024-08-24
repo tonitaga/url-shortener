@@ -5,13 +5,15 @@ import (
 	"fmt"
 
 	"github.com/tonitaga/url-shortener/internal/config"
+	"github.com/tonitaga/url-shortener/internal/storage/repository/redirect"
 
 	_ "github.com/lib/pq"
 )
 
 type Storage struct {
-	config   *config.DatabaseConfig
-	database *sql.DB
+	config              *config.DatabaseConfig
+	database            *sql.DB
+	redirect_repository *redirect.RedirectRepository
 }
 
 func New(config *config.DatabaseConfig) *Storage {
@@ -48,4 +50,12 @@ func (s *Storage) Connect() error {
 
 func (s *Storage) Disconnect() {
 	s.database.Close()
+}
+
+func (s *Storage) Redirect() *redirect.RedirectRepository {
+	if s.redirect_repository == nil {
+		s.redirect_repository = redirect.New(s.database)
+	}
+
+	return s.redirect_repository
 }
