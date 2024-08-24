@@ -18,6 +18,6 @@ func New(config *config.Config) *Server {
 }
 
 func (s *Server) Run() error {
-	binding_address := fmt.Sprintf("%s%d", s.config.Application.Host, s.config.Application.Port)
+	binding_address := fmt.Sprintf("%s:%d", s.config.Application.Host, s.config.Application.Port)
 	return http.ListenAndServe(binding_address, nil)
 }
