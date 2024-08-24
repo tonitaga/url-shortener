@@ -1,0 +1,5 @@
+CREATE TABLE redirects (
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    alias VARCHAR NOT NULL UNIQUE,
+    target VARCHAR NOT NULL
+);
