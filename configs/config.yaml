@@ -1,0 +1,12 @@
+application:
+  environment: "local" # or "dev", "prod", etc.
+  host: "localhost"
+  port: 8082
+
+database:
+  host: "localhost"
+  port: 5432
+  username: "postgres"
+  password: "postgres"
+  database: "postgres"
+  
