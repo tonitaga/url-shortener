@@ -48,6 +48,11 @@ func (s *Server) Run() error {
 	return nil
 }
 
+func (s *Server) Stop() {
+	s.logger.Info("Stopping server")
+	s.storage.Disconnect()
+}
+
 func (s *Server) configureLogger() {
 	switch s.config.Application.Environment {
 	case config.EnvLocal:
@@ -79,6 +84,7 @@ func (s *Server) configureStorage() error {
 func (s *Server) configureRouter() {
 	s.router.HandleFunc("/create/alias", s.redirectCreationHandler)
 	s.router.HandleFunc("/{alias}", s.redirectionHandler)
+	s.router.HandleFunc("/", s.showMainPageHandler)
 	s.logger.Info("Router configuration finished")
 }
 

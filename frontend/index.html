@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tonitaga Shortener</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+		
+		body {
+			font-family: 'JetBrains Mono', monospace;
+			margin: 0;
+			padding: 0;
+			background-color: #2f343f;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.container {
+			background-color: #2f343f;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: none;
+			border: none;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: auto;
+		}
+		.logo {
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+		}
+		.title {
+			font-size: 102px;
+			color: #66d9ef;
+			margin-bottom: 20px;
+		}
+		.description {
+			font-size: 24px;
+			color: #66d9ef;
+			margin-bottom: 40px;
+			padding: 20px;
+			background-color: #2f343f;
+			border-radius: none;
+			box-shadow: none;
+		}
+		.input-field {
+			margin-bottom: 20px;
+		}
+		.input-field input[type="text"] {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+			width: 300px;
+			font-size: 24px;
+		}
+		.button {
+			background-color: #4a5164;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			font-size: 18px;
+			color: #66d9ef;
+		}
+		.button:hover {
+			background-color: #434a5e;
+		}
+		.result {
+			margin-top: 40px;
+			font-size: 24px;
+			color: #66d9ef;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 class="title">Tonitaga Shortener</h1>
+		<div class="description">
+			Tonitaga Shortener - это простой сократитель URL-адресов, который поможет вам с легкостью делиться длинными URL-адресами. С помощью нашего сервиса вы можете создавать короткие и запоминающиеся URL-адреса, которыми легко делиться в социальных сетях, электронной почте или приложениях для обмена сообщениями.
+		</div>
+		<form id="shortener-form">
+			<div class="input-field">
+				<input type="text" id="original-url" placeholder="Enter original URL" style="width: 600px;">
+			</div>
+			<div class="input-field">
+				<input type="text" id="alias" placeholder="Enter custom alias (optional)" style="width: 600px;">
+			</div>
+			<button class="button" id="shorten-button" style="font-size: 36px;">Shorten!</button>
+		</form>
+		<div class="result" id="result"></div>
+		<button class="share-button" id="copy-button" style="display: none;">Copy link</button>
+	</div>
+
+	<script>
+		const shortenButton = document.getElementById('shorten-button');
+		const copyButton = document.getElementById('copy-button');
+		const resultDiv = document.getElementById('result');
+		const originalUrlInput = document.getElementById('original-url');
+		const aliasInput = document.getElementById('alias');
+
+		shortenButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			const originalUrl = originalUrlInput.value;
+			const alias = aliasInput.value;
+			if (originalUrl === '') {
+				alert('Please enter original URL');
+				return;
+			}
+			const data = { original_url: originalUrl, alias: alias };
+			fetch('http://localhost:8082/create/alias', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			})
+			.then(response => response.json())
+			.then((data) => {
+				const shortUrl = `http://localhost:8082/${data.alias}`;
+				resultDiv.innerText = `Your short URL: ${shortUrl}`;
+				copyButton.style.display = 'block';
+				copyButton.addEventListener('click', () => {
+					navigator.clipboard.writeText(shortUrl);
+					alert('Link copied to clipboard!');
+				});
+			})
+			.catch((error) => {
+				alert('Error creating short URL: ' + error.message);
+			});
+		});
+	</script>
+</body>
+</html>

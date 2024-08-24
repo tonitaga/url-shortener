@@ -10,7 +10,7 @@ import (
 
 func (s *Server) redirectCreationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "only POST requests are allowed", http.StatusMethodNotAllowed)
+		http.ServeFile(w, r, "frontend/405/index.html")
 		return
 	}
 
@@ -85,10 +85,19 @@ func (s *Server) redirectionHandler(w http.ResponseWriter, r *http.Request) {
 	model, err := s.storage.Redirect().FindByAlias(alias)
 	if err != nil {
 		s.logger.WithError(err).Info("Someone tried redirection with unknonw alias")
-		http.Error(w, "Unknown shortlink", http.StatusNotFound)
+		http.ServeFile(w, r, "frontend/404/index.html")
 		return
 	}
 
 	http.Redirect(w, r, model.Target, http.StatusFound)
 	s.logger.Infof("Redirection to '%s' finished successfully", model.Target)
+}
+
+func (s *Server) showMainPageHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Only GET requests are allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	http.ServeFile(w, r, "frontend/index.html")
 }
