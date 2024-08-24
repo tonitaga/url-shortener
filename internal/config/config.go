@@ -13,33 +13,33 @@ const (
 	EnvProd  = "prod"
 )
 
-type application_config struct {
+type ApplicationConfig struct {
 	Environment string `yaml:"environment"`
 	Host        string `yaml:"host"`
 	Port        int    `yaml:"port"`
 }
 
-type database_config struct {
+type DatabaseConfig struct {
 	Host     string `yaml:"host"`
 	Port     int    `yaml:"port"`
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
-	Name     string `yaml:"name"`
+	Name     string `yaml:"dbname"`
 }
 
 type Config struct {
-	Application application_config `yaml:"application"`
-	Database    database_config    `yaml:"database"`
+	Application ApplicationConfig `yaml:"application"`
+	Database    DatabaseConfig    `yaml:"database"`
 }
 
 func NewDefault() *Config {
 	return &Config{
-		Application: application_config{
+		Application: ApplicationConfig{
 			Environment: "local",
 			Host:        "localhost",
 			Port:        8080,
 		},
-		Database: database_config{
+		Database: DatabaseConfig{
 			Host:     "localhost",
 			Port:     5432,
 			Username: "postgres",

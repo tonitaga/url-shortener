@@ -6,12 +6,14 @@ import (
 	"os"
 
 	"github.com/sirupsen/logrus"
-	"github.com/tonitaga/url-shortener/internal/app/config"
+	"github.com/tonitaga/url-shortener/internal/config"
+	"github.com/tonitaga/url-shortener/internal/storage"
 )
 
 type Server struct {
-	config *config.Config
-	logger *logrus.Logger
+	config  *config.Config
+	logger  *logrus.Logger
+	storage *storage.Storage
 }
 
 func New(config *config.Config) *Server {
@@ -26,8 +28,13 @@ func (s *Server) Run() error {
 	s.configureLogger()
 	s.logger.Info("Logger configuration finished successfully")
 
+	// Database configuration
+	if err := s.configureStorage(); err != nil {
+		return err
+	}
+
+	// Starting server
 	if err := s.startServer(); err != nil {
-		s.logger.WithError(err).Error("Failed to start server")
 		return err
 	}
 
@@ -48,6 +55,17 @@ func (s *Server) configureLogger() {
 	}
 
 	s.logger.SetOutput(os.Stdout)
+}
+
+func (s *Server) configureStorage() error {
+	storage := storage.New(&s.config.Database)
+	if err := storage.Connect(); err != nil {
+		s.logger.WithError(err).Error("Failed to connect to database")
+		return err
+	}
+
+	s.storage = storage
+	return nil
 }
 
 func (s *Server) startServer() error {

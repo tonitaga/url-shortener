@@ -4,8 +4,8 @@ import (
 	"flag"
 	"log"
 
-	"github.com/tonitaga/url-shortener/internal/app/config"
 	"github.com/tonitaga/url-shortener/internal/app/server"
+	"github.com/tonitaga/url-shortener/internal/config"
 )
 
 var (
