@@ -7,6 +7,12 @@ import (
 	"github.com/go-yaml/yaml"
 )
 
+const (
+	EnvLocal = "local"
+	EnvDev   = "dev"
+	EnvProd  = "prod"
+)
+
 type application_config struct {
 	Environment string `yaml:"environment"`
 	Host        string `yaml:"host"`
