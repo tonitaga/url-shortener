@@ -67,7 +67,12 @@ func (s *Server) configureLogger() {
 		s.logger.SetFormatter(&logrus.JSONFormatter{})
 	}
 
-	s.logger.SetOutput(os.Stdout)
+	logFile, err := os.OpenFile("/var/log/url-shortener.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		s.logger.WithError(err).Error("Failed to open log file")
+		return
+	}
+	s.logger.SetOutput(logFile)
 }
 
 func (s *Server) configureStorage() error {

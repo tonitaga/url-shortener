@@ -1,5 +1,5 @@
 application:
-  environment: "local" # or "dev", "prod", etc.
+  environment: "prod" # or "dev", "prod", etc.
   port: 8000
 
 database:
