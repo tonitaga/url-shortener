@@ -5,7 +5,7 @@ launch:
 	docker compose up url-shortener
 
 migrate-up:
-	migrate -path ./migrations -database 'postgres://user:password@0.0.0.0:5432/dbname?sslmode=disable' up
+	migrate -path ./migrations -database 'postgres://tonitaga:password@0.0.0.0:5432/url-shortener?sslmode=disable' up
 
 migrate-down:
-	migrate -path ./migrations -database 'postgres://user:password@0.0.0.0:5432/dbname?sslmode=disable' down
+	migrate -path ./migrations -database 'postgres://tonitaga:password@0.0.0.0:5432/url-shortener?sslmode=disable' down
