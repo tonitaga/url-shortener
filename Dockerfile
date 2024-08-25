@@ -8,12 +8,13 @@ WORKDIR /app
 
 COPY go.mod .
 COPY go.sum .
-
 RUN go mod download
+
+COPY postgres-wait.sh .
+RUN chmod +x postgres-wait.sh
+RUN apk add postgresql-client
 
 COPY . .
 RUN go build -o url-shortener ./cmd/app/main.go
-
-EXPOSE 8000
 
 CMD ["./url-shortener"]

@@ -5,5 +5,5 @@ application:
 database:
   host: "database"
   port: 5432
-  username: "postgres"
-  database: "postgres"
+  username: "tonitaga"
+  dbname: "url-shortener"
