@@ -119,10 +119,17 @@
 			e.preventDefault();
 			const originalUrl = originalUrlInput.value;
 			const alias = aliasInput.value;
+
 			if (originalUrl === '') {
 				alert('Please enter original URL');
 				return;
 			}
+
+			if (!isValidUrl(originalUrl)) {
+				alert('Invalid URL');
+				return;
+			}
+
 			const data = { original_url: originalUrl, alias: alias };
 			fetch(`${site}/create/alias`, {
 				method: 'POST',
@@ -147,6 +154,15 @@
 					alert('Error creating short URL: ' + error.message);
 				});
 		});
+
+		function isValidUrl(url) {
+			try {
+				new URL(url);
+				return true;
+			} catch (error) {
+				return false;
+			}
+		}
 	</script>
 </body>
 
