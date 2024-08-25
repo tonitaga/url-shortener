@@ -2,7 +2,7 @@ services:
   url-shortener:
     restart: always
     container_name: url-shortener-service-container
-    command: ./postgres-wait.sh database ./url-shortener
+    command: sh postgres-wait.sh database ./url-shortener
     build: .
     ports:
       - 80:8000
