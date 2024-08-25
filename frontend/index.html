@@ -121,12 +121,17 @@
 			const alias = aliasInput.value;
 
 			if (originalUrl === '') {
-				alert('Please enter original URL');
+				alert('Please enter the original URL.');
 				return;
 			}
 
 			if (!isValidUrl(originalUrl)) {
 				alert('Invalid URL');
+				return;
+			}
+
+			if (alias && !isValidAlias(alias)) {
+				alert('Invalid alias. Please use only letters, numbers, and hyphens.');
 				return;
 			}
 
@@ -161,6 +166,15 @@
 				return true;
 			} catch (error) {
 				return false;
+			}
+		}
+
+		function isValidAlias(alias) {
+			try {
+				new URL(alias);
+				return false;
+			} catch (error) {
+				return true;
 			}
 		}
 	</script>
