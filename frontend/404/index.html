@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>404 Error</title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-		
+
 		body {
 			font-family: 'JetBrains Mono', monospace;
 			margin: 0;
@@ -15,6 +16,7 @@
 			justify-content: center;
 			align-items: center;
 		}
+
 		.error-container {
 			background-color: #2f343f;
 			padding: 40px;
@@ -28,17 +30,20 @@
 			justify-content: center;
 			margin: auto;
 		}
+
 		.error-message {
 			font-size: 192px;
 			font-weight: bold;
 			color: #66d9ef;
 			margin-bottom: 20px;
 		}
+
 		.description {
 			font-size: 24px;
 			color: #9f9f9f;
 			margin-bottom: 40px;
 		}
+
 		.button {
 			background-color: #4a5164;
 			color: #fff;
@@ -48,17 +53,20 @@
 			cursor: pointer;
 			font-size: 18px;
 		}
+
 		.button:hover {
 			background-color: #434a5e;
 		}
 	</style>
 </head>
+
 <body>
 	<div class="error-container">
-		<a href="http://localhost:8000" class="error-link">
+		<a href="http://localhost" class="error-link">
 			<h1 class="error-message">404</h1>
 		</a>
 		<p class="description">Мля! Я маслину поймал std::terminate()</p>
 	</div>
 </body>
+
 </html>

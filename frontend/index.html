@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title>Tonitaga Shortener</title>
 	<style>
 		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-		
+
 		body {
 			font-family: 'JetBrains Mono', monospace;
 			margin: 0;
@@ -15,6 +16,7 @@
 			justify-content: center;
 			align-items: center;
 		}
+
 		.container {
 			background-color: #2f343f;
 			padding: 40px;
@@ -28,16 +30,19 @@
 			justify-content: center;
 			margin: auto;
 		}
+
 		.logo {
 			width: 40px;
 			height: 40px;
 			margin-right: 10px;
 		}
+
 		.title {
 			font-size: 102px;
 			color: #66d9ef;
 			margin-bottom: 20px;
 		}
+
 		.description {
 			font-size: 24px;
 			color: #66d9ef;
@@ -47,9 +52,11 @@
 			border-radius: none;
 			box-shadow: none;
 		}
+
 		.input-field {
 			margin-bottom: 20px;
 		}
+
 		.input-field input[type="text"] {
 			padding: 10px;
 			border: none;
@@ -57,6 +64,7 @@
 			width: 300px;
 			font-size: 24px;
 		}
+
 		.button {
 			background-color: #4a5164;
 			color: #fff;
@@ -67,9 +75,11 @@
 			font-size: 18px;
 			color: #66d9ef;
 		}
+
 		.button:hover {
 			background-color: #434a5e;
 		}
+
 		.result {
 			margin-top: 40px;
 			font-size: 24px;
@@ -77,11 +87,14 @@
 		}
 	</style>
 </head>
+
 <body>
 	<div class="container">
 		<h1 class="title">Tonitaga Shortener</h1>
 		<div class="description">
-			Tonitaga Shortener - это простой сократитель URL-адресов, который поможет вам с легкостью делиться длинными URL-адресами. С помощью нашего сервиса вы можете создавать короткие и запоминающиеся URL-адреса, которыми легко делиться в социальных сетях, электронной почте или приложениях для обмена сообщениями.
+			Tonitaga Shortener - это простой сократитель URL-адресов, который поможет вам с легкостью делиться длинными
+			URL-адресами. С помощью нашего сервиса вы можете создавать короткие и запоминающиеся URL-адреса, которыми
+			легко делиться в социальных сетях, электронной почте или приложениях для обмена сообщениями.
 		</div>
 		<form id="shortener-form">
 			<div class="input-field">
@@ -97,6 +110,7 @@
 	</div>
 
 	<script>
+		const site = 'localhost';
 		const shortenButton = document.getElementById('shorten-button');
 		const copyButton = document.getElementById('copy-button');
 		const resultDiv = document.getElementById('result');
@@ -112,25 +126,26 @@
 				return;
 			}
 			const data = { original_url: originalUrl, alias: alias };
-			fetch('http://localhost:8000/create/alias', {
+			fetch(`http://${site}/create/alias`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			})
-			.then(response => response.json())
-			.then((data) => {
-				const shortUrl = `http://localhost:8000/${data.alias}`;
-				resultDiv.innerText = `Your short URL: ${shortUrl}`;
-				copyButton.style.display = 'block';
-				copyButton.addEventListener('click', () => {
-					navigator.clipboard.writeText(shortUrl);
-					alert('Link copied to clipboard!');
+				.then(response => response.json())
+				.then((data) => {
+					const shortUrl = `http://${site}/${data.alias}`;
+					resultDiv.innerText = `Your short URL: ${shortUrl}`;
+					copyButton.style.display = 'block';
+					copyButton.addEventListener('click', () => {
+						navigator.clipboard.writeText(shortUrl);
+						alert('Link copied to clipboard!');
+					});
+				})
+				.catch((error) => {
+					alert('Error creating short URL: ' + error.message);
 				});
-			})
-			.catch((error) => {
-				alert('Error creating short URL: ' + error.message);
-			});
 		});
 	</script>
 </body>
+
 </html>
