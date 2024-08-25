@@ -38,13 +38,11 @@
 		}
 
 		.title {
-			font-size: 102px;
 			color: #66d9ef;
 			margin-bottom: 20px;
 		}
 
 		.description {
-			font-size: 24px;
 			color: #66d9ef;
 			margin-bottom: 40px;
 			padding: 20px;
@@ -61,8 +59,6 @@
 			padding: 10px;
 			border: none;
 			border-radius: 5px;
-			width: 300px;
-			font-size: 24px;
 		}
 
 		.button {
@@ -72,7 +68,6 @@
 			border: none;
 			border-radius: 5px;
 			cursor: pointer;
-			font-size: 18px;
 			color: #66d9ef;
 		}
 
@@ -82,8 +77,163 @@
 
 		.result {
 			margin-top: 40px;
-			font-size: 24px;
 			color: #66d9ef;
+		}
+
+		/* For screens larger than 1200px (e.g., desktops) */
+		@media only screen and (min-width: 1200px) {
+			.title {
+				font-size: 96px;
+			}
+
+			.description {
+				font-size: 24px;
+				padding: 20px;
+			}
+
+			.input-field input[type="text"] {
+				width: 1000px;
+				font-size: 24px;
+			}
+
+			.button {
+				width: 400px;
+				font-size: 18px;
+			}
+
+			.result {
+				font-size: 24px;
+			}
+		}
+
+		/* For screens between 992px and 1199px (e.g., large tablets and small desktops) */
+		@media only screen and (min-width: 992px) and (max-width: 1199px) {
+			.title {
+				font-size: 78px;
+			}
+
+			.description {
+				font-size: 20px;
+				padding: 15px;
+			}
+
+			.input-field input[type="text"] {
+				width: 800px;
+				font-size: 20px;
+			}
+
+			.button {
+				width: 320px;
+				font-size: 16px;
+			}
+
+			.result {
+				font-size: 20px;
+			}
+		}
+
+		/* For screens between 768px and 991px (e.g., tablets) */
+		@media only screen and (min-width: 768px) and (max-width: 991px) {
+			.title {
+				font-size: 60px;
+			}
+
+			.description {
+				font-size: 18px;
+				padding: 10px;
+			}
+
+			.input-field input[type="text"] {
+				width: 600px;
+				font-size: 18px;
+			}
+
+			.button {
+				width: 240px;
+				font-size: 14px;
+			}
+
+			.result {
+				font-size: 18px;
+			}
+		}
+
+		/* For screens between 576px and 767px (e.g., large mobile devices) */
+		@media only screen and (min-width: 576px) and (max-width: 767px) {
+			.title {
+				font-size: 42px;
+			}
+
+			.description {
+				font-size: 16px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 450px;
+				font-size: 16px;
+			}
+
+			.button {
+				width: 180px;
+				font-size: 12px;
+			}
+
+			.result {
+				font-size: 16px;
+			}
+		}
+
+		/* For screens between 480px and 575px (e.g., smaller mobile devices) */
+		@media only screen and (min-width: 480px) and (max-width: 575px) {
+			.title {
+				font-size: 36px;
+			}
+
+			.description {
+				font-size: 14px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 350px;
+				font-size: 14px;
+			}
+
+			.button {
+				width: 140px;
+				font-size: 10px;
+			}
+
+			.result {
+				font-size: 14px;
+			}
+		}
+
+		/* For screens smaller than 480px (e.g., very small mobile devices) */
+		@media only screen and (max-width: 479px) {
+			.title {
+				font-size: 24px;
+			}
+
+			.description {
+				font-size: 10px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 220px;
+				font-size: 12px;
+			}
+
+			.button {
+				width: 88px;
+				font-size: 8px;
+			}
+
+			.result {
+				font-size: 12px;
+			}
 		}
 	</style>
 </head>
@@ -92,24 +242,23 @@
 	<div class="container">
 		<h1 class="title">Tonitaga Shortener</h1>
 		<div class="description">
-			Tonitaga Shortener - это простой сократитель URL-адресов, который поможет вам с легкостью делиться длинными
-			URL-адресами. С помощью нашего сервиса вы можете создавать короткие и запоминающиеся URL-адреса, которыми
-			легко делиться в социальных сетях, электронной почте или приложениях для обмена сообщениями.
+			Это сервис для сокращения URL-адресов, чтобы их было удобно и легко делиться в социальных сетях, почте и
+			мессенджерах.
 		</div>
 		<form id="shortener-form">
 			<div class="input-field">
-				<input type="text" id="original-url" placeholder="Enter original URL" style="width: 600px;">
+				<input type="text" id="original-url" placeholder="Вставьте ссылку">
 			</div>
 			<div class="input-field">
-				<input type="text" id="alias" placeholder="Enter custom alias (optional)" style="width: 600px;">
+				<input type="text" id="alias" placeholder="Введите кастомный алиас (необязательно)">
 			</div>
-			<button class="button" id="shorten-button" style="font-size: 36px;">Shorten!</button>
+			<button class="button" id="shorten-button">Сократить</button>
 		</form>
 		<div class="result" id="result"></div>
 	</div>
 
 	<script>
-		const site = 'http://localhost';
+		const site = 'http://tonitap.ru';
 		const shortenButton = document.getElementById('shorten-button');
 		const resultDiv = document.getElementById('result');
 		const originalUrlInput = document.getElementById('original-url');
@@ -146,7 +295,7 @@
 					const shortUrl = `${site}/${data.alias}`;
 					const link = document.createElement('a');
 					link.href = shortUrl;
-					link.innerText = `Your short URL: ${shortUrl}`;
+					link.innerText = `${shortUrl}`;
 					link.addEventListener('click', (e) => {
 						e.preventDefault();
 						navigator.clipboard.writeText(shortUrl);
