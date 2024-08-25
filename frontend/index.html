@@ -106,13 +106,11 @@
 			<button class="button" id="shorten-button" style="font-size: 36px;">Shorten!</button>
 		</form>
 		<div class="result" id="result"></div>
-		<button class="share-button" id="copy-button" style="display: none;">Copy link</button>
 	</div>
 
 	<script>
-		const site = 'localhost';
+		const site = 'http://localhost';
 		const shortenButton = document.getElementById('shorten-button');
-		const copyButton = document.getElementById('copy-button');
 		const resultDiv = document.getElementById('result');
 		const originalUrlInput = document.getElementById('original-url');
 		const aliasInput = document.getElementById('alias');
@@ -126,20 +124,24 @@
 				return;
 			}
 			const data = { original_url: originalUrl, alias: alias };
-			fetch(`http://${site}/create/alias`, {
+			fetch(`${site}/create/alias`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(data)
 			})
 				.then(response => response.json())
 				.then((data) => {
-					const shortUrl = `http://${site}/${data.alias}`;
-					resultDiv.innerText = `Your short URL: ${shortUrl}`;
-					copyButton.style.display = 'block';
-					copyButton.addEventListener('click', () => {
+					const shortUrl = `${site}/${data.alias}`;
+					const link = document.createElement('a');
+					link.href = shortUrl;
+					link.innerText = `Your short URL: ${shortUrl}`;
+					link.addEventListener('click', (e) => {
+						e.preventDefault();
 						navigator.clipboard.writeText(shortUrl);
 						alert('Link copied to clipboard!');
 					});
+					resultDiv.innerHTML = '';
+					resultDiv.appendChild(link);
 				})
 				.catch((error) => {
 					alert('Error creating short URL: ' + error.message);
