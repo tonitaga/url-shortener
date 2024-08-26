@@ -1,0 +1,27 @@
+services:
+  url-shortener:
+    restart: always
+    container_name: url-shortener-service-container
+    command: sh postgres-wait.sh database ./url-shortener
+    build: .
+    ports:
+      - 80:8000
+    environment:
+      - DATABASE_PASSWORD=password
+    depends_on:
+      - database
+
+  database:
+    container_name: database-container
+    image: postgres
+    environment:
+      - POSTGRES_USER=tonitaga
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=url-shortener
+    ports:
+      - 5432:5432
+    volumes:
+      - .database:/var/lib/postgresql/data
+
+volumes:
+  .database:

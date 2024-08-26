@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Tonitaga Shortener</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+		body {
+			font-family: 'JetBrains Mono', monospace;
+			margin: 0;
+			padding: 0;
+			background-color: #2f343f;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.container {
+			background-color: #2f343f;
+			padding: 40px;
+			border-radius: 10px;
+			box-shadow: none;
+			border: none;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			margin: auto;
+		}
+
+		.logo {
+			width: 40px;
+			height: 40px;
+			margin-right: 10px;
+		}
+
+		.title {
+			color: #66d9ef;
+			margin-bottom: 20px;
+		}
+
+		.description {
+			color: #66d9ef;
+			margin-bottom: 40px;
+			padding: 20px;
+			background-color: #2f343f;
+			border-radius: none;
+			box-shadow: none;
+		}
+
+		.input-field {
+			margin-bottom: 20px;
+		}
+
+		.input-field input[type="text"] {
+			padding: 10px;
+			border: none;
+			border-radius: 5px;
+		}
+
+		.button {
+			background-color: #4a5164;
+			color: #fff;
+			padding: 10px 20px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			color: #66d9ef;
+		}
+
+		.button:hover {
+			background-color: #434a5e;
+		}
+
+		.result {
+			margin-top: 40px;
+			color: #66d9ef;
+		}
+
+		/* For screens larger than 1200px (e.g., desktops) */
+		@media only screen and (min-width: 1200px) {
+			.title {
+				font-size: 96px;
+			}
+
+			.description {
+				font-size: 24px;
+				padding: 20px;
+			}
+
+			.input-field input[type="text"] {
+				width: 1000px;
+				font-size: 24px;
+			}
+
+			.button {
+				width: 400px;
+				font-size: 18px;
+			}
+
+			.result {
+				font-size: 24px;
+			}
+		}
+
+		/* For screens between 992px and 1199px (e.g., large tablets and small desktops) */
+		@media only screen and (min-width: 992px) and (max-width: 1199px) {
+			.title {
+				font-size: 78px;
+			}
+
+			.description {
+				font-size: 20px;
+				padding: 15px;
+			}
+
+			.input-field input[type="text"] {
+				width: 800px;
+				font-size: 20px;
+			}
+
+			.button {
+				width: 320px;
+				font-size: 16px;
+			}
+
+			.result {
+				font-size: 20px;
+			}
+		}
+
+		/* For screens between 768px and 991px (e.g., tablets) */
+		@media only screen and (min-width: 768px) and (max-width: 991px) {
+			.title {
+				font-size: 60px;
+			}
+
+			.description {
+				font-size: 18px;
+				padding: 10px;
+			}
+
+			.input-field input[type="text"] {
+				width: 600px;
+				font-size: 18px;
+			}
+
+			.button {
+				width: 240px;
+				font-size: 14px;
+			}
+
+			.result {
+				font-size: 18px;
+			}
+		}
+
+		/* For screens between 576px and 767px (e.g., large mobile devices) */
+		@media only screen and (min-width: 576px) and (max-width: 767px) {
+			.title {
+				font-size: 42px;
+			}
+
+			.description {
+				font-size: 16px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 450px;
+				font-size: 16px;
+			}
+
+			.button {
+				width: 180px;
+				font-size: 12px;
+			}
+
+			.result {
+				font-size: 16px;
+			}
+		}
+
+		/* For screens between 480px and 575px (e.g., smaller mobile devices) */
+		@media only screen and (min-width: 480px) and (max-width: 575px) {
+			.title {
+				font-size: 36px;
+			}
+
+			.description {
+				font-size: 14px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 350px;
+				font-size: 14px;
+			}
+
+			.button {
+				width: 140px;
+				font-size: 10px;
+			}
+
+			.result {
+				font-size: 14px;
+			}
+		}
+
+		/* For screens smaller than 480px (e.g., very small mobile devices) */
+		@media only screen and (max-width: 479px) {
+			.title {
+				font-size: 24px;
+			}
+
+			.description {
+				font-size: 10px;
+				padding: 5px;
+			}
+
+			.input-field input[type="text"] {
+				width: 220px;
+				font-size: 12px;
+			}
+
+			.button {
+				width: 88px;
+				font-size: 8px;
+			}
+
+			.result {
+				font-size: 12px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="title">Tonitaga Shortener</h1>
+		<div class="description">
+			Это сервис для сокращения URL-адресов, чтобы ими было удобно и легко делиться в социальных сетях, почте и
+			мессенджерах.
+		</div>
+		<form id="shortener-form">
+			<div class="input-field">
+				<input type="text" id="original-url" placeholder="Вставьте ссылку">
+			</div>
+			<div class="input-field">
+				<input type="text" id="alias" placeholder="Введите кастомный алиас (необязательно)">
+			</div>
+			<button class="button" id="shorten-button">Сократить</button>
+		</form>
+		<div class="result" id="result"></div>
+	</div>
+
+	<script>
+		const site = 'http://tonitap.ru';
+		const shortenButton = document.getElementById('shorten-button');
+		const resultDiv = document.getElementById('result');
+		const originalUrlInput = document.getElementById('original-url');
+		const aliasInput = document.getElementById('alias');
+
+		shortenButton.addEventListener('click', (e) => {
+			e.preventDefault();
+			const originalUrl = originalUrlInput.value;
+			const alias = aliasInput.value;
+
+			if (originalUrl === '') {
+				alert('Please enter the original URL.');
+				return;
+			}
+
+			if (!isValidUrl(originalUrl)) {
+				alert('Invalid URL');
+				return;
+			}
+
+			if (alias && !isValidAlias(alias)) {
+				alert('Invalid alias. Please use only letters, numbers, and hyphens.');
+				return;
+			}
+
+			const data = { original_url: originalUrl, alias: alias };
+			fetch(`${site}/create/alias`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(data)
+			})
+				.then(response => response.json())
+				.then((data) => {
+					const shortUrl = `${site}/${data.alias}`;
+					const link = document.createElement('a');
+					link.href = shortUrl;
+					link.innerText = `${shortUrl}`;
+					link.addEventListener('click', (e) => {
+						e.preventDefault();
+						navigator.clipboard.writeText(shortUrl);
+						alert('Link copied to clipboard!');
+					});
+					resultDiv.innerHTML = '';
+					resultDiv.appendChild(link);
+				})
+				.catch((error) => {
+					alert('Error creating short URL: ' + error.message);
+				});
+		});
+
+		function isValidUrl(url) {
+			try {
+				new URL(url);
+				return true;
+			} catch (error) {
+				return false;
+			}
+		}
+
+		function isValidAlias(alias) {
+			try {
+				new URL(alias);
+				return false;
+			} catch (error) {
+				return true;
+			}
+		}
+	</script>
+</body>
+
+</html>
