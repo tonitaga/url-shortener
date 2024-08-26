@@ -1,0 +1,9 @@
+application:
+  environment: "prod" # or "dev", "prod", etc.
+  port: 8000
+
+database:
+  host: "database"
+  port: 5432
+  username: "tonitaga"
+  dbname: "url-shortener"
