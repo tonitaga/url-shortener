@@ -50,12 +50,12 @@ func (c *Config) LoadFromYaml(path string) error {
 
 	file, err := os.Open(path)
 	if err != nil {
-		return fmt.Errorf("%s: %v", op, err)
+		return fmt.Errorf("%s: %w", op, err)
 	}
 	defer file.Close()
-
+// %w - оборачивает ошибку, собирает стек ошибок
 	if err := yaml.NewDecoder(file).Decode(c); err != nil {
-		return fmt.Errorf("%s: %v", op, err)
+		return fmt.Errorf("%s: %w", op, err)
 	}
 
 	return nil
